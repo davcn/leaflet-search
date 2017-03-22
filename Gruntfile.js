@@ -9,6 +9,7 @@ grunt.loadNpmTasks('grunt-contrib-cssmin');
 grunt.loadNpmTasks('grunt-contrib-jshint');
 grunt.loadNpmTasks("grunt-remove-logging");
 grunt.loadNpmTasks('grunt-contrib-watch');
+grunt.loadNpmTasks('grunt-sass');
 grunt.loadNpmTasks('grunt-todos');
 
 grunt.initConfig({
@@ -34,7 +35,7 @@ grunt.initConfig({
 	},
 	clean: {
 		dist: {
-			src: ['dist/*']
+			src: ['dist/*', 'src/*.css']
 		}
 	},
 	removelogging: {
@@ -54,6 +55,14 @@ grunt.initConfig({
 		},
 		files: ['src/*.js']
 	},
+    sass: {
+        dist: {
+            files: {
+                'src/leaflet-search.css': ['src/leaflet-search.scss'],
+                'src/leaflet-search.mobile.css': ['src/leaflet-search.mobile.scss']
+            }
+        }
+    },
 	concat: {
 		//TODO cut out SearchMarker
 		options: {
@@ -111,7 +120,8 @@ grunt.initConfig({
 
 grunt.registerTask('default', [
 	'clean',
-	'concat',	
+	'sass',
+	'concat',
 	'cssmin',
 	'removelogging',	
 	'jshint',
